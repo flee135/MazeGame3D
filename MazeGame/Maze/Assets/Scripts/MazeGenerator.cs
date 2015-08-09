@@ -5,9 +5,12 @@ using System.Collections.Generic;
 public class MazeGenerator {
 
 	const int RAND_RANGE = int.MaxValue;
+	public static int currentSize;
 	static GameObject mazeWalls = new GameObject("Maze Walls");
 
 	public static void drawMaze(int size) {
+		currentSize = size;
+
 		MazeCell[,] maze = generate (size);
 
 		// Set up ground and outer walls.
@@ -31,6 +34,10 @@ public class MazeGenerator {
 		wallEast.transform.position = new Vector3 ((float)size*5, 2.5f, (float)size*5/2);
 		wallEast.transform.localScale = new Vector3 (1f, 5f, 1f + size*5);
 
+		// Return player to center
+		GameObject player = GameObject.Find ("Player");
+		player.transform.position = new Vector3 ((float)size*5/2, 1f, (float)size*5/2);
+
 		// Set up maze walls
 		for (int row = 0; row < maze.GetLength(0); row++)
 		{
@@ -51,6 +58,29 @@ public class MazeGenerator {
 				}
 			}    
 		}
+
+		// Place portal in random position on edge
+		int portalRow = Random.Range (0, 3);
+		int portalCol = Random.Range (0, 3);
+		while (portalRow == 1 && portalCol == 1) {
+			portalRow = Random.Range (0, 3);
+			portalCol = Random.Range (0, 3);
+		}
+
+		float portalX = 2.5f + (size/2)*5*portalCol;
+		float portalY = 2.5f + (size/2)*5*portalRow;
+		if (size % 2 == 0) {
+			if (portalCol == 2) {
+				portalX -= 5f;
+			}
+			if (portalRow == 2) {
+				portalY -= 5f;
+			}
+		}
+		GameObject portal = GameObject.Find ("Portal");
+		portal.transform.position = new Vector3 (portalX, 0.05f, portalY);
+		portal.transform.localScale = new Vector3 (2f, 0.1f, 2f);
+
 	}
 
 	public static void resetMaze(int size) {
