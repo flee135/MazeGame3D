@@ -17,11 +17,11 @@ public class PortalTriggerBehavior : MonoBehaviour {
 		if (isActive) {
 			this.gameObject.GetComponent<Renderer>().material = portalActiveMaterial;
 			ParticleSystem particleSystem = this.GetComponentInChildren<ParticleSystem>();
-			particleSystem.startColor = new Color(0, 255, 0, 255);
+			particleSystem.startColor = Color.green;
 		} else {
 			this.gameObject.GetComponent<Renderer>().material = portalInactiveMaterial;
 			ParticleSystem particleSystem = this.GetComponentInChildren<ParticleSystem>();
-			particleSystem.startColor = new Color(255, 0, 0, 255);
+			particleSystem.startColor = Color.red;
 		}
 	}
 

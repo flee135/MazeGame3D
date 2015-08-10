@@ -11,10 +11,10 @@ public class InventoryScript : MonoBehaviour {
 	}
 
 	void OnControllerColliderHit(ControllerColliderHit hit) {
-		if (hit.gameObject.name.Equals ("PortalKey(Clone)")) {
+		if (hit.gameObject.name.Equals (Constants.portalKeyName)) {
 			GameObject.Destroy (hit.gameObject);
 			hasCube = true;
-			GameObject portal = GameObject.Find ("Portal");
+			GameObject portal = GameObject.Find (Constants.portalName);
 			PortalTriggerBehavior portalScript = (PortalTriggerBehavior) portal.GetComponent(typeof(PortalTriggerBehavior));
 			portalScript.setIsActive(true);
 		}

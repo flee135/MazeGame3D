@@ -5,11 +5,13 @@ using System.Collections.Generic;
 public class MazeGenerator {
 
 	const int RAND_RANGE = int.MaxValue;
-	public static int currentSize;
-	public static Object portalKeyPrefab = (GameObject)Resources.Load ("Prefabs/PortalKey");
-	public static GameObject portal = GameObject.Find ("Portal");
 
-	static GameObject mazeWalls = new GameObject("Maze Walls");
+	public static int currentSize;
+	public static Object portalKeyPrefab = (GameObject)Resources.Load (Constants.portalKeyPrefabDest);
+	public static Object portalPrefab = (GameObject)Resources.Load (Constants.portalPrefabDest);
+	public static GameObject portal;
+
+	static GameObject mazeWalls = new GameObject(Constants.mazeWallsName);
 
 	public static void drawMaze(int size) {
 		currentSize = size;
@@ -17,7 +19,7 @@ public class MazeGenerator {
 		MazeCell[,] maze = generate (size);
 
 		// Set up ground and outer walls.
-		GameObject ground = GameObject.Find ("Ground");
+		GameObject ground = GameObject.Find (Constants.groundName);
 		ground.transform.position = new Vector3 ((float)size*5/2, 0, (float)size*5/2);
 		ground.transform.localScale = new Vector3 ((float)size/2, 1, (float)size/2);
 
@@ -38,7 +40,7 @@ public class MazeGenerator {
 		wallEast.transform.localScale = new Vector3 (1f, 5f, 1f + size*5);
 
 		// Return player to center
-		GameObject player = GameObject.Find ("Player");
+		GameObject player = GameObject.Find (Constants.playerName);
 		player.transform.position = new Vector3 ((float)size*5/2, 1f, (float)size*5/2);
 
 		// Set up maze walls
@@ -80,8 +82,9 @@ public class MazeGenerator {
 				portalY -= 5f;
 			}
 		}
-		portal.transform.position = new Vector3 (portalX, 0.05f, portalY);
-		portal.transform.localScale = new Vector3 (2f, 0.1f, 2f);
+		portal = (GameObject)GameObject.Instantiate 
+				(portalPrefab, new Vector3 (portalX, 0.05f, portalY), Quaternion.identity);
+		portal.name = Constants.portalName;
 
 		// Place key in random position not on portal
 		int keyRow = Random.Range (0, 3);
@@ -101,7 +104,9 @@ public class MazeGenerator {
 				keyY -= 5f;
 			}
 		}
-		GameObject.Instantiate(portalKeyPrefab, new Vector3(keyX, 1.5f, keyY), Quaternion.identity);
+		GameObject portalKey = (GameObject)GameObject.Instantiate
+				(portalKeyPrefab, new Vector3(keyX, 1.5f, keyY), Quaternion.identity);
+		portalKey.name = Constants.portalKeyName;
 
 	}
 
@@ -109,9 +114,8 @@ public class MazeGenerator {
 		foreach(Transform child in mazeWalls.transform) {
 			GameObject.Destroy (child.gameObject);
 		}
-		PortalTriggerBehavior portalScript = (PortalTriggerBehavior) portal.GetComponent(typeof(PortalTriggerBehavior));
-		portalScript.setIsActive(false);
-		GameObject.Destroy (GameObject.Find ("PortalKey(Clone)"));
+		GameObject.Destroy (GameObject.Find (Constants.portalName));
+		GameObject.Destroy (GameObject.Find (Constants.portalKeyName));
 		drawMaze (size);
 	}
 
