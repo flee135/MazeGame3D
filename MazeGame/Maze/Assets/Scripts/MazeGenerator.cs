@@ -105,7 +105,7 @@ public class MazeGenerator {
 			}
 		}
 		GameObject portalKey = (GameObject)GameObject.Instantiate
-				(portalKeyPrefab, new Vector3(keyX, 1.5f, keyY), Quaternion.identity);
+				(portalKeyPrefab, new Vector3(keyX, 1.5f, keyY), Quaternion.Euler (35.3f, 0f, 45f));
 		portalKey.name = Constants.portalKeyName;
 
 	}
