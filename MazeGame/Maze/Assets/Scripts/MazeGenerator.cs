@@ -6,6 +6,9 @@ public class MazeGenerator {
 
 	const int RAND_RANGE = int.MaxValue;
 	public static int currentSize;
+	public static Object portalKeyPrefab = (GameObject)Resources.Load ("Prefabs/PortalKey");
+	public static GameObject portal = GameObject.Find ("Portal");
+
 	static GameObject mazeWalls = new GameObject("Maze Walls");
 
 	public static void drawMaze(int size) {
@@ -77,9 +80,28 @@ public class MazeGenerator {
 				portalY -= 5f;
 			}
 		}
-		GameObject portal = GameObject.Find ("Portal");
 		portal.transform.position = new Vector3 (portalX, 0.05f, portalY);
 		portal.transform.localScale = new Vector3 (2f, 0.1f, 2f);
+
+		// Place key in random position not on portal
+		int keyRow = Random.Range (0, 3);
+		int keyCol = Random.Range (0, 3);
+		while ((keyRow == 1 && keyCol == 1) || (keyRow == portalRow && keyCol == portalCol)) {
+			keyRow = Random.Range (0, 3);
+			keyCol = Random.Range (0, 3);
+		}
+
+		float keyX = 2.5f + (size/2)*5*keyCol;
+		float keyY = 2.5f + (size/2)*5*keyRow;
+		if (size % 2 == 0) {
+			if (keyCol == 2) {
+				keyX -= 5f;
+			}
+			if (keyRow == 2) {
+				keyY -= 5f;
+			}
+		}
+		GameObject.Instantiate(portalKeyPrefab, new Vector3(keyX, 1.5f, keyY), Quaternion.identity);
 
 	}
 
@@ -87,6 +109,9 @@ public class MazeGenerator {
 		foreach(Transform child in mazeWalls.transform) {
 			GameObject.Destroy (child.gameObject);
 		}
+		PortalTriggerBehavior portalScript = (PortalTriggerBehavior) portal.GetComponent(typeof(PortalTriggerBehavior));
+		portalScript.setIsActive(false);
+		GameObject.Destroy (GameObject.Find ("PortalKey(Clone)"));
 		drawMaze (size);
 	}
 
