@@ -11,7 +11,7 @@ public class MazeGenerator {
 	public static Object portalPrefab = (GameObject)Resources.Load (Constants.portalPrefabDest);
 	public static GameObject portal;
 
-	static GameObject mazeWalls = new GameObject(Constants.mazeWallsName);
+	static GameObject mazeWalls;
 
 	public static void drawMaze(int size) {
 		currentSize = size;
@@ -41,9 +41,12 @@ public class MazeGenerator {
 
 		// Return player to center
 		GameObject player = GameObject.Find (Constants.playerName);
-		player.transform.position = new Vector3 ((float)size*5/2, 1f, (float)size*5/2);
+		if (player != null) {
+			player.transform.position = new Vector3 ((float)size*5/2, 1f, (float)size*5/2);
+		}
 
 		// Set up maze walls
+		GameObject mazeWalls = new GameObject(Constants.mazeWallsName);
 		for (int row = 0; row < maze.GetLength(0); row++)
 		{
 			for (int col = 0; col < maze.GetLength(1); col++)
@@ -111,9 +114,10 @@ public class MazeGenerator {
 	}
 
 	public static void resetMaze(int size) {
-		foreach(Transform child in mazeWalls.transform) {
+		/*foreach(Transform child in mazeWalls.transform) {
 			GameObject.Destroy (child.gameObject);
-		}
+		}*/
+		GameObject.Destroy(GameObject.Find (Constants.mazeWallsName));
 		GameObject.Destroy (GameObject.Find (Constants.portalName));
 		GameObject.Destroy (GameObject.Find (Constants.portalKeyName));
 		drawMaze (size);

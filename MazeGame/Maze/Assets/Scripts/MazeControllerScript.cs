@@ -3,11 +3,6 @@ using System.Collections;
 
 public class MazeControllerScript : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		MazeGenerator.drawMaze (10);
-	}
-	
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKey (KeyCode.Alpha1)) {

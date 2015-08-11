@@ -8,7 +8,7 @@ public class Constants {
 	public static string portalPrefabDest = "Prefabs/Portal";
 	public static string portalKeyName = "PortalKey";
 	public static string portalKeyPrefabDest = "Prefabs/PortalKey";
-	public static string groundName = "Ground";
+	public static string groundName = "Board";
 	public static string mazeWallsName = "Maze Walls";
 
 }
