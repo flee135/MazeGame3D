@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class InventoryScript : MonoBehaviour {
+public class PlayerInventoryScript : MonoBehaviour {
 
 	public bool hasCube;
 
