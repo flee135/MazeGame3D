@@ -5,6 +5,7 @@ public class PortalTriggerBehavior : MonoBehaviour {
 
 	public Material portalActiveMaterial;
 	public Material portalInactiveMaterial;
+	public AudioClip warpSound;
 
 	bool isActive;
 
@@ -27,6 +28,7 @@ public class PortalTriggerBehavior : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) {
 		if (isActive) {
+			AudioSource.PlayClipAtPoint(warpSound, gameObject.transform.position);
 			MazeGenerator.resetMaze (MazeGenerator.currentSize);
 			setIsActive (false);
 		}
