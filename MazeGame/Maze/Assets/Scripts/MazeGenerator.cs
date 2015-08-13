@@ -114,13 +114,14 @@ public class MazeGenerator {
 	}
 
 	public static void resetMaze(int size) {
-		/*foreach(Transform child in mazeWalls.transform) {
-			GameObject.Destroy (child.gameObject);
-		}*/
 		GameObject.Destroy(GameObject.Find (Constants.mazeWallsName));
 		GameObject.Destroy (GameObject.Find (Constants.portalName));
 		GameObject.Destroy (GameObject.Find (Constants.portalKeyName));
 		drawMaze (size);
+
+		GameObject player = GameObject.Find (Constants.playerName);
+		PlayerHUDScript hud = (PlayerHUDScript) player.GetComponent(typeof(PlayerHUDScript));
+		hud.resetTimer ();
 	}
 
 	private static MazeCell[,] generate(int size) {

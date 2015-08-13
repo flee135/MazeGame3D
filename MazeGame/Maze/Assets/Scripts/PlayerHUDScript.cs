@@ -26,4 +26,8 @@ public class PlayerHUDScript : MonoBehaviour {
 		
 		timerText.text = string.Format("{0:0}:{1:00}.{2:000}", minutes, seconds, millis);
 	}
+
+	public void resetTimer() {
+		timer = 0f;
+	}
 }
