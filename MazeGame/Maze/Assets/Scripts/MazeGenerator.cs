@@ -6,7 +6,7 @@ public class MazeGenerator {
 
 	const int RAND_RANGE = int.MaxValue;
 
-	public static int currentSize;
+	public static int currentSize = Constants.startingMazeSize;
 	public static Object portalKeyPrefab = (GameObject)Resources.Load (Constants.portalKeyPrefabDest);
 	public static Object portalPrefab = (GameObject)Resources.Load (Constants.portalPrefabDest);
 	public static GameObject portal;
@@ -120,8 +120,10 @@ public class MazeGenerator {
 		drawMaze (size);
 
 		GameObject player = GameObject.Find (Constants.playerName);
-		PlayerHUDScript hud = (PlayerHUDScript) player.GetComponent(typeof(PlayerHUDScript));
-		hud.resetTimer ();
+		if (player != null) {
+			PlayerHUDScript hud = (PlayerHUDScript)player.GetComponent (typeof(PlayerHUDScript));
+			hud.resetTimer ();
+		}
 	}
 
 	private static MazeCell[,] generate(int size) {

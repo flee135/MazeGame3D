@@ -5,15 +5,22 @@ using System.Collections;
 public class MenuScript : MonoBehaviour {
 
 	public Canvas quitMenu;
+	public Canvas singlePlayerMenu;
 	public Button playText;
 	public Button exitText;
+	public Slider mazeSizeSlider;
+	public Text mazeSizeText;
 
-	// Use this for initialization
 	void Start () {
+		singlePlayerMenu = singlePlayerMenu.GetComponent<Canvas> ();
 		quitMenu = quitMenu.GetComponent<Canvas> ();
 		playText = playText.GetComponent<Button> ();
 		exitText = exitText.GetComponent<Button> ();
+		mazeSizeText = mazeSizeText.GetComponent<Text> ();
+		singlePlayerMenu.enabled = false;
 		quitMenu.enabled = false;
+
+		mazeSizeSlider.value = (float)MazeGenerator.currentSize;
 	}
 	
 	public void exitPressed() {
@@ -26,6 +33,24 @@ public class MenuScript : MonoBehaviour {
 		quitMenu.enabled = false;
 		playText.enabled = true;
 		exitText.enabled = true;
+	}
+
+	public void singlePlayerPressed() {
+		singlePlayerMenu.enabled = true;
+		playText.enabled = false;
+		exitText.enabled = false;
+	}
+	
+	public void singlePlayerCancel() {
+		singlePlayerMenu.enabled = false;
+		playText.enabled = true;
+		exitText.enabled = true;
+	}
+
+	public void sliderChanged() {
+		int mazeSize = (int)mazeSizeSlider.value;
+		mazeSizeText.text = "Size of Maze: " + mazeSize;
+		MazeGenerator.resetMaze (mazeSize);
 	}
 
 	public void startlevel() {
