@@ -29,7 +29,7 @@ public class PortalTriggerBehavior : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		if (isActive) {
 			AudioSource.PlayClipAtPoint(teleportSound, gameObject.transform.position);
-			MazeGenerator.resetMaze (MazeGenerator.currentSize);
+			Logic.setupRun (MazeGenerator.currentSize);
 			setIsActive (false);
 		}
 	}

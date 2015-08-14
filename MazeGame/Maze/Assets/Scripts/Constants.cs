@@ -4,6 +4,8 @@ using System.Collections;
 public class Constants {
 
 	public static int startingMazeSize = 10;
+	public static int countdownTime = 3;
+
 	public static string playerName = "Player";
 	public static string portalName = "Portal";
 	public static string portalPrefabDest = "Prefabs/Portal";

@@ -118,12 +118,6 @@ public class MazeGenerator {
 		GameObject.Destroy (GameObject.Find (Constants.portalName));
 		GameObject.Destroy (GameObject.Find (Constants.portalKeyName));
 		drawMaze (size);
-
-		GameObject player = GameObject.Find (Constants.playerName);
-		if (player != null) {
-			PlayerHUDScript hud = (PlayerHUDScript)player.GetComponent (typeof(PlayerHUDScript));
-			hud.resetTimer ();
-		}
 	}
 
 	private static MazeCell[,] generate(int size) {

@@ -1,22 +1,39 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.Characters.FirstPerson;
 using System.Collections;
 
 public class PlayerHUDScript : MonoBehaviour {
 
-	public static float timer;
+	public float timer;
 	public Text timerText;
+	public float endCountdownTime;
+
+	private bool countingDown;
 
 	// Use this for initialization
 	void Start () {
 		timer = 0f;
-		updateTimerText ();
+		countingDown = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		timer += Time.deltaTime;
-		updateTimerText ();
+		if (countingDown) {
+			if (Time.time < endCountdownTime) {
+				timer = endCountdownTime-Time.time;
+				updateTimerText ();
+			}
+			else {
+				timer = 0f;
+				setTimerTextColor (new Color (0, 0, 0));
+				countingDown = false;
+				gameObject.GetComponentInParent<FirstPersonController>().enabled = true;
+			}
+		} else {
+			timer += Time.deltaTime;
+			updateTimerText ();
+		}
 	}
 
 	void updateTimerText() {
@@ -29,5 +46,15 @@ public class PlayerHUDScript : MonoBehaviour {
 
 	public void resetTimer() {
 		timer = 0f;
+	}
+
+	public void startCountdown(int seconds) {
+		endCountdownTime = Time.time + seconds;
+		countingDown = true;
+		setTimerTextColor (new Color (255, 0, 0));
+	}
+
+	public void setTimerTextColor (Color color) {
+		timerText.color = color;
 	}
 }

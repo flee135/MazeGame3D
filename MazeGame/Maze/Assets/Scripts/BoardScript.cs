@@ -4,7 +4,7 @@ using System.Collections;
 public class BoardScript : MonoBehaviour {
 
 	void Start() {
-		MazeGenerator.resetMaze (MazeGenerator.currentSize);
+		Logic.setupRun (MazeGenerator.currentSize);
 	}
 
 	void Update () {
