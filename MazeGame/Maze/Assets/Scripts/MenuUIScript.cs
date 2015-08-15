@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class MenuScript : MonoBehaviour {
+public class MenuUIScript : MonoBehaviour {
 
 	public Canvas quitMenu;
 	public Canvas singlePlayerMenu;
