@@ -14,4 +14,8 @@ public class Constants {
 	public static string groundName = "Board";
 	public static string mazeWallsName = "Maze Walls";
 
+	// The following are just global variables that can and should be modified.
+	public static bool isPaused = false;
+	public static bool isCountingDown = true;
+
 }

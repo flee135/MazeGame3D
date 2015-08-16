@@ -11,11 +11,12 @@ public class MazeUI : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			escapeMenu.enabled = !escapeMenu.enabled;
+			Constants.isPaused = escapeMenu.enabled;
 
 			GameObject player = GameObject.Find (Constants.playerName);
 			if (player != null) {
 				FirstPersonController ctrl = (FirstPersonController)player.GetComponent (typeof(FirstPersonController));
-				if (escapeMenu.enabled) {
+				if (escapeMenu.enabled || Constants.isCountingDown) {
 					ctrl.enabled = false;
 				} else {
 					ctrl.enabled = true;
@@ -32,6 +33,8 @@ public class MazeUI : MonoBehaviour {
 
 	public void resumePressed() {
 		escapeMenu.enabled = false;
+		Constants.isPaused = false;
+
 		GameObject player = GameObject.Find (Constants.playerName);
 		if (player != null) {
 			FirstPersonController ctrl = (FirstPersonController)player.GetComponent (typeof(FirstPersonController));
@@ -40,6 +43,7 @@ public class MazeUI : MonoBehaviour {
 	}
 
 	public void exitPressed() {
+		Constants.isPaused = false;
 		Application.LoadLevel (0);
 	}
 }

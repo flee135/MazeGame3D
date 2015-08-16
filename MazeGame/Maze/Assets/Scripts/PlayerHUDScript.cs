@@ -6,33 +6,34 @@ using System.Collections;
 public class PlayerHUDScript : MonoBehaviour {
 
 	public float timer;
+	public float countdownTimer;
 	public Text timerText;
-	public float endCountdownTime;
-
-	private bool countingDown;
 
 	// Use this for initialization
 	void Start () {
 		timer = 0f;
-		countingDown = true;
+		countdownTimer = 0f;
+		Constants.isCountingDown = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (countingDown) {
-			if (Time.time < endCountdownTime) {
-				timer = endCountdownTime-Time.time;
+		if (!Constants.isPaused) {
+			if (Constants.isCountingDown) {
+				countdownTimer += Time.deltaTime;
+				if (countdownTimer < Constants.countdownTime) {
+					timer = Constants.countdownTime-countdownTimer;
+					updateTimerText ();
+				} else {
+					timer = 0f;
+					setTimerTextColor (Color.black);
+					Constants.isCountingDown = false;
+					gameObject.GetComponentInParent<FirstPersonController> ().enabled = true;
+				}
+			} else {
+				timer += Time.deltaTime;
 				updateTimerText ();
 			}
-			else {
-				timer = 0f;
-				setTimerTextColor (new Color (0, 0, 0));
-				countingDown = false;
-				gameObject.GetComponentInParent<FirstPersonController>().enabled = true;
-			}
-		} else {
-			timer += Time.deltaTime;
-			updateTimerText ();
 		}
 	}
 
@@ -49,9 +50,9 @@ public class PlayerHUDScript : MonoBehaviour {
 	}
 
 	public void startCountdown(int seconds) {
-		endCountdownTime = Time.time + seconds;
-		countingDown = true;
-		setTimerTextColor (new Color (255, 0, 0));
+		countdownTimer = 0f;
+		Constants.isCountingDown = true;
+		setTimerTextColor (Color.red);
 	}
 
 	public void setTimerTextColor (Color color) {

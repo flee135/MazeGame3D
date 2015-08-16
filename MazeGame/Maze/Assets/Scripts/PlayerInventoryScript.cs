@@ -16,7 +16,7 @@ public class PlayerInventoryScript : MonoBehaviour {
 			AudioSource.PlayClipAtPoint(collectAudio, gameObject.transform.position);
 			GameObject.Destroy (hit.gameObject);
 			hasCube = true;
-			GetComponent<PlayerHUDScript>().setTimerTextColor (new Color(0, 255, 0));
+			GetComponent<PlayerHUDScript>().setTimerTextColor (Color.green);
 			GameObject portal = GameObject.Find (Constants.portalName);
 			PortalTriggerBehavior portalScript = (PortalTriggerBehavior) portal.GetComponent(typeof(PortalTriggerBehavior));
 			portalScript.setIsActive(true);
