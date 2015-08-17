@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityStandardAssets.Characters.FirstPerson;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MazeUI : MonoBehaviour {
 
@@ -44,6 +45,7 @@ public class MazeUI : MonoBehaviour {
 
 	public void exitPressed() {
 		Constants.isPaused = false;
+		Constants.times = new List<float> ();
 		Application.LoadLevel (0);
 	}
 }

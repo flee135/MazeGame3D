@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class PortalTriggerBehavior : MonoBehaviour {
 
@@ -31,6 +32,15 @@ public class PortalTriggerBehavior : MonoBehaviour {
 			AudioSource.PlayClipAtPoint(teleportSound, gameObject.transform.position);
 			Logic.setupRun (MazeGenerator.currentSize);
 			setIsActive (false);
+
+			// Add time of run to list of times
+			GameObject player = GameObject.Find (Constants.playerName);
+			if (player != null) {
+				PlayerHUDScript hud = (PlayerHUDScript)player.GetComponent (typeof(PlayerHUDScript));
+				Constants.times.Add (hud.timer);
+				hud.totalTime += hud.timer;
+				hud.updateRunningTimes ();
+			}
 		}
 	}
 }

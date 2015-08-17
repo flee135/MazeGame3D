@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Constants {
 
@@ -17,5 +18,6 @@ public class Constants {
 	// The following are just global variables that can and should be modified.
 	public static bool isPaused = false;
 	public static bool isCountingDown = true;
+	public static List<float> times = new List<float>();
 
 }
